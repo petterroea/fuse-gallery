@@ -5,7 +5,7 @@
 		var Observable = require('FuseJS/Observable');
 		var image = Observable();
 
-		function load () {
+		/*function load () {
 			gallery.getPicture().then(function (pic) {
 				image.value = pic;
 			});
@@ -13,17 +13,17 @@
 		module.exports = {
 			load: load,
 			image: image
-		}
+		}*/
 	</JavaScript>
 	<ClientPanel>
 		<StackPanel>
 			<Text FontSize="32">Gallery example</Text>
-			<Button Text="Load Image" Clicked="{load}" />
+			<!--<Button Text="Load Image" Clicked="{load}" />
 			<Image File="{image}">
 				<Android>
 					<Rotate Degrees="90" />
 				</Android>
-			</Image>
+			</Image>-->
 		</StackPanel>
 	</ClientPanel>
 </App>

@@ -3,7 +3,7 @@
   "Packages": [
     "Fuse",
     "FuseJS",
-    "Fuse.Camera"
+    "Fuse.ImageTools"
   ],
   "Includes": [
     "Gallery.uno",

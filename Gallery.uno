@@ -1,3 +1,4 @@
+
 using Uno;
 using Uno.Collections;
 using Fuse.Scripting;
@@ -9,16 +10,16 @@ using Uno.Threading;
 public class Gallery : NativeModule {
 	public Gallery () {
 		// Add Load function to load image as a texture
-		AddMember(new NativePromise<Fuse.Camera.PictureResult, Fuse.Scripting.Object>("getPicture", GetPicture, Converter));
+		AddMember(new NativePromise<Fuse.ImageTools.Image, Fuse.Scripting.Object>("getPicture", GetPicture, Converter));
 	}
 
-	static Future<Fuse.Camera.PictureResult> GetPicture(object[] args)
+	static Future<Fuse.ImageTools.Image> GetPicture(object[] args)
 	{
 		var path = Uno.IO.Path.Combine(Uno.IO.Directory.GetUserDirectory(Uno.IO.UserDirectory.Data), "temp.jpg");
 		return GalleryImpl.GetPicture(path);
 	}
 
-    static Fuse.Scripting.Object Converter(Context context, Fuse.Camera.PictureResult result)
+    static Fuse.Scripting.Object Converter(Context context, Fuse.ImageTools.Image result)
     {
 		var func = (Fuse.Scripting.Function)context.GlobalObject["File"];
 		var file = (Fuse.Scripting.Object)func.Construct();
@@ -48,7 +49,7 @@ public class GalleryImpl
 		get; set;
 	}
 
-	static Promise<Fuse.Camera.PictureResult> FuturePath {
+	static Promise<Fuse.ImageTools.Image> FuturePath {
 		get; set;
 	}
 
@@ -61,7 +62,7 @@ public class GalleryImpl
 	*/
 	static extern(Android) Java.Object _intentListener;
 
-	public static Future<Fuse.Camera.PictureResult> GetPicture (string path) {
+	public static Future<Fuse.ImageTools.Image> GetPicture (string path) {
 		if (InProgress) {
 			return null;
 		}
@@ -72,7 +73,7 @@ public class GalleryImpl
 		}
 		Path = path;
 		GetPictureImpl();
-		FuturePath = new Promise<Fuse.Camera.PictureResult>();
+		FuturePath = new Promise<Fuse.ImageTools.Image>();
 		return FuturePath;
 	}
 
@@ -176,7 +177,7 @@ public class GalleryImpl
 
 	public static void Picked () {
 		InProgress = false;
-		FuturePath.Resolve(new Fuse.Camera.PictureResult(Path, 0));
+		FuturePath.Resolve(new Fuse.ImageTools.Image(Path));
 	}
 
 }
